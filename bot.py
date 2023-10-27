@@ -165,7 +165,7 @@ def callback_query(CLIENT,CallbackQuery):
        try :
         cmd(f'''yt-dlp -f 22 -ciw  -o "{video_title}.mp4" "{link}"''')
         with open(f'''{video_title}.mp4''', 'rb') as f:
-          bot.send_document(user_id, f,caption=video_title)
+          bot.send_video(user_id, f,caption=video_title)
         cmd(f'''rm res.txt "{video_title}.mp4" ''' ) 
        except FileNotFoundError: 
          pass   
