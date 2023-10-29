@@ -93,9 +93,9 @@ def callback_query(CLIENT,CallbackQuery):
         video_id = info_dict.get("id", None)
         video_title = info_dict.get('title', None)    
        cmd(f'''yt-dlp -f 18 -ciw  -o "{video_title}.mp4" "{link}"''')
-       with open(f'''{video_title}.mp4''', 'rb') as f:
-          bot.send_video(user_id, f,caption=video_title)
-       cmd(f'''rm res.txt "{video_title}.mp4" ''' ) 
+       cmd(f'''uploadgram {user_id} ./downloads/''')
+       shutil.rmtree('./downloads/') 
+       cmd(f'''rm res.txt ''' ) 
        zaza += 1  
       CallbackQuery.edit_message_text("تم التنزيل ✅  تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0  ")   
       cmd(f'unlink file.txt')
