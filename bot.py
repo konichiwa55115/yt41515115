@@ -53,7 +53,15 @@ async def refunc(client,message):
 
 @bot.on_message(filters.private & filters.incoming & filters.text  )
 def _telegram_file(client, message):
-
+  try: 
+    with open('file.txt', 'r') as fh:
+        if os.stat('file.txt').st_size == 0: 
+            pass
+        else:
+            sent_message = message.reply_text('هناك عملية تحميل الآن يا نرم  ', quote=True)
+            return
+  except FileNotFoundError: 
+    pass  
   global user_id
   user_id = message.from_user.id 
   global felo
@@ -80,7 +88,6 @@ def callback_query(CLIENT,CallbackQuery):
   numbofvid = int(temp)
   cmd('unlink res.txt')
   if CallbackQuery.data == "vid 360p":
-      CallbackQuery.edit_message_text("تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0 ")   
       zaza = 1
       while (zaza <= numbofvid): 
        cmd(f'sed -n {zaza}p file.txt > res.txt')
@@ -93,68 +100,65 @@ def callback_query(CLIENT,CallbackQuery):
         video_id = info_dict.get("id", None)
         video_title = info_dict.get('title', None)    
        cmd(f'''yt-dlp -f 18 -ciw  -o ./downloads/"{video_title}.mp4" "{link}"''')
-       cmd(f'''uploadgram {user_id} ./downloads/''')
+       cmd(f'''uploadgram "{user_id}" ./downloads/''')
        shutil.rmtree('./downloads/') 
        cmd(f'''rm res.txt ''' ) 
        zaza += 1  
-      CallbackQuery.edit_message_text("تم التنزيل ✅  تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0  ")   
       cmd(f'unlink file.txt')
 
   elif CallbackQuery.data == "vid 720p":
-      CallbackQuery.edit_message_text("تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0 ")   
       zaza = 1
       while (zaza <= numbofvid): 
        cmd(f'sed -n {zaza}p file.txt > res.txt')
        with open('res.txt', 'r') as file:
         link = file.read().rstrip('\n')
-       try:
-        cmd(f'''yt-dlp -f 22 -ciw  -o downloads/"%(title)s.%(ext)s" "{link}"''')
-        cmd(f'''uploadgram -1001821573758 downloads''')
-        shutil.rmtree('./downloads/')
-       except FileNotFoundError: 
-         pass  
+       with YoutubeDL() as ydl: 
+        info_dict = ydl.extract_info(f'{link}', download=False)
+        video_url = info_dict.get("url", None)
+        video_id = info_dict.get("id", None)
+        video_title = info_dict.get('title', None)    
+       cmd(f'''yt-dlp -f 22 -ciw  -o ./downloads/"{video_title}.mp4" "{link}"''')
+       cmd(f'''uploadgram "{user_id}" ./downloads/''')
+       shutil.rmtree('./downloads/') 
        zaza += 1  
-      CallbackQuery.edit_message_text("تم التنزيل ✅  تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0 ")   
       cmd(f'unlink file.txt')
 
   elif CallbackQuery.data == "aud":
-      CallbackQuery.edit_message_text("تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0 ")   
       zaza = 1
       while (zaza <= numbofvid): 
        cmd(f'sed -n {zaza}p file.txt > res.txt')
        with open('res.txt', 'r') as file:
         link = file.read().rstrip('\n')   
-       try :
-        cmd(f'''yt-dlp -ciw  --extract-audio --audio-format mp3  -o downloads/"%(title)s.%(ext)s"  "{link}"''')
-        cmd(f'''uploadgram -1001821573758 downloads''')
-        shutil.rmtree('./downloads/')
-       except FileNotFoundError: 
-         pass  
+       with YoutubeDL() as ydl: 
+        info_dict = ydl.extract_info(f'{link}', download=False)
+        video_url = info_dict.get("url", None)
+        video_id = info_dict.get("id", None)
+        video_title = info_dict.get('title', None)    
+       cmd(f'''yt-dlp -ciw  --extract-audio --audio-format mp3  -o downloads/"%(title)s.%(ext)s"  "{link}"''')
+       cmd(f'''uploadgram "{user_id}" ./downloads/''')
+       shutil.rmtree('./downloads/') 
        zaza += 1    
       
-      CallbackQuery.edit_message_text("تم التنزيل ✅ تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0 ")   
       cmd(f'unlink file.txt')
   elif CallbackQuery.data == "vidcont360p":
-      CallbackQuery.edit_message_text("تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0 ")   
       zaza = int(hazard) +1
       while (zaza <= numbofvid): 
        cmd(f'sed -n {zaza}p file.txt > res.txt')
        with open('res.txt', 'r') as file:
         link = file.read().rstrip('\n')   
        
-       try:
-        cmd(f'''yt-dlp -f 18 -ciw  -o downloads/"%(title)s.%(ext)s" "{link}"''')
-        cmd(f'''uploadgram -1001821573758 downloads''')
-        shutil.rmtree('./downloads/')
-        cmd('''rm res.txt''')
-       except FileNotFoundError: 
-         pass  
+       with YoutubeDL() as ydl: 
+        info_dict = ydl.extract_info(f'{link}', download=False)
+        video_url = info_dict.get("url", None)
+        video_id = info_dict.get("id", None)
+        video_title = info_dict.get('title', None)    
+       cmd(f'''yt-dlp -f 18 -ciw  -o ./downloads/"{video_title}.mp4" "{link}"''')
+       cmd(f'''uploadgram "{user_id}" ./downloads/''')
+       shutil.rmtree('./downloads/') 
        zaza += 1  
-      CallbackQuery.edit_message_text("تم التنزيل ✅  تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0 ")   
       cmd(f'unlink file.txt')
 
   elif CallbackQuery.data == "vidcont720p":
-      CallbackQuery.edit_message_text("تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0 ")   
       zaza = int(hazard) +1
       while (zaza <= numbofvid): 
        cmd(f'sed -n {zaza}p file.txt > res.txt')
@@ -165,34 +169,27 @@ def callback_query(CLIENT,CallbackQuery):
         video_url = info_dict.get("url", None)
         video_id = info_dict.get("id", None)
         video_title = info_dict.get('title', None)    
-       try :
-        cmd(f'''yt-dlp -f 22 -ciw  -o "{video_title}.mp4" "{link}"''')
-        with open(f'''{video_title}.mp4''', 'rb') as f:
-          bot.send_video(user_id, f,caption=video_title)
-        cmd(f'''rm res.txt "{video_title}.mp4" ''' ) 
-       except FileNotFoundError: 
-         pass   
+       cmd(f'''yt-dlp -f 22 -ciw  -o ./downloads/"{video_title}.mp4" "{link}"''')
+       cmd(f'''uploadgram "{user_id}" ./downloads/''')
+       shutil.rmtree('./downloads/') 
        zaza += 1  
-      CallbackQuery.edit_message_text("تم التنزيل ✅ \n  تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0  ")   
       cmd(f'unlink file.txt')
 
   elif CallbackQuery.data == "audcont":
-      CallbackQuery.edit_message_text("تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0 ")   
       zaza = int(hazard) +1
       while (zaza <= numbofvid): 
        cmd(f'sed -n {zaza}p file.txt > res.txt')
        with open('res.txt', 'r') as file:
         link = file.read().rstrip('\n')   
-       
-       try :
-        cmd(f'''yt-dlp -ciw  --extract-audio --audio-format mp3  -o downloads/"%(title)s.%(ext)s"  "{link}"''')
-        cmd(f'''uploadgram -1001821573758 downloads''')
-        shutil.rmtree('./downloads/')
-        cmd('''rm res.txt''')
-       except FileNotFoundError: 
-         pass  
+       with YoutubeDL() as ydl: 
+        info_dict = ydl.extract_info(f'{link}', download=False)
+        video_url = info_dict.get("url", None)
+        video_id = info_dict.get("id", None)
+        video_title = info_dict.get('title', None)    
+       cmd(f'''yt-dlp -ciw  --extract-audio --audio-format mp3  -o downloads/"%(title)s.%(ext)s"  "{link}"''')
+       cmd(f'''uploadgram "{user_id}" ./downloads/''')
+       shutil.rmtree('./downloads/') 
        zaza += 1           
-      CallbackQuery.edit_message_text("تم التنزيل ✅ تجد ملفاتك هنا \n https://t.me/+asgctos1WR81OGI0 ")   
       cmd(f'unlink file.txt')
   elif CallbackQuery.data == "frmstrt":
       felo.reply_text(
