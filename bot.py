@@ -134,7 +134,7 @@ def callback_query(CLIENT,CallbackQuery):
         video_url = info_dict.get("url", None)
         video_id = info_dict.get("id", None)
         video_title = info_dict.get('title', None)    
-       cmd(f'''yt-dlp -ciw  --extract-audio --audio-format mp3  -o downloads/"%(title)s.%(ext)s"  "{link}"''')
+       cmd(f'''yt-dlp -ciw  --extract-audio --audio-format m4a  -o downloads/"%(title)s.%(ext)s"  "{link}"''')
        cmd(f'''uploadgram "{user_id}" ./downloads/''')
        shutil.rmtree('./downloads/') 
        zaza += 1    
@@ -186,7 +186,7 @@ def callback_query(CLIENT,CallbackQuery):
         video_url = info_dict.get("url", None)
         video_id = info_dict.get("id", None)
         video_title = info_dict.get('title', None)    
-       cmd(f'''yt-dlp -ciw  --extract-audio --audio-format mp3  -o downloads/"%(title)s.%(ext)s"  "{link}"''')
+       cmd(f'''yt-dlp -ciw  --extract-audio --audio-format m4a  -o downloads/"%(title)s.%(ext)s"  "{link}"''')
        cmd(f'''uploadgram "{user_id}" ./downloads/''')
        shutil.rmtree('./downloads/') 
        zaza += 1           
